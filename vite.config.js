@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-	base: '/notepad/',
+	base: '/',
 
 	build: {
 		target: 'esnext', // Compiles to modern JS for better performance
@@ -31,13 +31,13 @@ export default defineConfig({
 				background_color: '#000000',
 				icons: [
 					{
-						src: '/notepad/icon-192-192.png', // You will need to add these dummy icons to your /public folder later
+						src: '/icon-192-192.png', // You will need to add these dummy icons to your /public folder later
 						sizes: '192x192',
 						type: 'image/png',
 						purpose: 'any maskable'
 					},
 					{
-						src: '/notepad/icon-512-512.png',
+						src: '/icon-512-512.png',
 						sizes: '512x512',
 						type: 'image/png',
 						purpose: 'any maskable'
