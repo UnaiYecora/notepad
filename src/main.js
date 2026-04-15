@@ -236,13 +236,13 @@ btnFloating.addEventListener('click', async () => {
 		// Copy over stylesheets to retain classes for styling
 		[...document.styleSheets].forEach(styleSheet => {
 			try {
-				if (styleSheet.href) {
+				if (styleSheet.ownerNode) {
+					pipWindow.document.head.appendChild(styleSheet.ownerNode.cloneNode(true));
+				} else if (styleSheet.href) {
 					const link = document.createElement('link');
 					link.rel = 'stylesheet';
 					link.href = styleSheet.href;
 					pipWindow.document.head.appendChild(link);
-				} else if (styleSheet.ownerNode) {
-					pipWindow.document.head.appendChild(styleSheet.ownerNode.cloneNode(true));
 				}
 			} catch (e) {
 				console.warn('Could not copy stylesheet to PiP window', e);
