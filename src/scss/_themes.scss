@@ -1,0 +1,127 @@
+:root {
+	// Default theme (dark)
+	--one: #121216;
+	--two: #e8e6e1;
+	--dot: #50505080;
+	color-scheme: dark;
+
+	// Dark
+	&:has(body[data-theme="dark"]) {
+		--one: #121216;
+		--two: #e8e6e1;
+		--dot: #50505080;
+		color-scheme: dark;
+	}
+
+	// Dark (high contrast)
+	&:has(body[data-theme="dark_hc"]) {
+		--one: #000;
+		--two: #fff;
+		--dot: #ffffff45;
+		color-scheme: dark;
+	}
+
+	// Light
+	&:has(body[data-theme="light"]) {
+		--one: #e8e6e1;
+		--two: #121216;
+		--dot: #827964;
+		color-scheme: light;
+	}
+
+	// Bitbee
+	&:has(body[data-theme="bitbee"]) {
+		--one: #292b30;
+		--two: #cfab4a;
+		--dot: #cfab4a47;
+		color-scheme: dark;
+	}
+
+	// Bitbee (inverted)
+	&:has(body[data-theme="bitbee_inv"]) {
+		--one: #cfab4a;
+		--two: #292b30;
+		--dot: #292b3078;
+		color-scheme: light;
+	}
+
+	// Station defender
+	&:has(body[data-theme="station_defender"]) {
+		--one: #17141c;
+		--two: #a692b0;
+		--dot: #a692b045;
+		color-scheme: dark;
+	}
+
+	// Paper palette
+	&:has(body[data-theme="paper_palette"]) {
+		--one: #f6e7c1;
+		--two: #3e3e3e;
+		--dot: #3e3e3e8a;
+		color-scheme: light;
+	}
+
+	// Paper palette (inverted)
+	&:has(body[data-theme="paper_palette_inv"]) {
+		--one: #3e3e3e;
+		--two: #f6e7c1;
+		--dot: #f6e7c129;
+		color-scheme: dark;
+	}
+
+	// 4am
+	&:has(body[data-theme="4am"]) {
+		--one: #352b30;
+		--two: #e6d4be;
+		--dot: #e6d4be3b;
+		color-scheme: dark;
+	}
+
+	// Nice Console
+	&:has(body[data-theme="console"]) {
+		--one: #000000;
+		--two: #00ffae;
+		--dot: #00ffae40;
+		color-scheme: dark;
+	}
+
+	// Green Console
+	&:has(body[data-theme="console_green"]) {
+		--one: #000000;
+		--two: #86ea16;
+		--dot: #86ea164a;
+		color-scheme: dark;
+	}
+
+	// Orange Console
+	&:has(body[data-theme="console_orange"]) {
+		--one: #000000;
+		--two: #ff9c40;
+		--dot: #ff9c4059;
+		color-scheme: dark;
+	}
+
+	// Nokia 3310
+	&:has(body[data-theme="nokia_3310"]) {
+		--one: #43523d;
+		--two: #c7f0d8;
+		--dot: #c7f0d845;
+		color-scheme: dark;
+	}
+
+	// Chasing Light
+	&:has(body[data-theme="chasing_light"]) {
+		--one: #000000;
+		--two: #ffff02;
+		--dot: #ffff0247;
+		color-scheme: dark;
+	}
+
+	// Ongbit
+	&:has(body[data-theme="ongbit"]) {
+		--one: #151d24;
+		--two: #ed8463;
+		--dot: #ed846347;
+		color-scheme: dark;
+	}
+}

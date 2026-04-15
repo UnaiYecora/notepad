@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Notepad</title>
+</head>
+
+<body class="app-body">
+	<!-- We wrap everything in appWrapper to easily move the whole app to the floating window -->
+	<div id="appWrapper" class="app-wrapper" style="display: none;">
+		<div class="app-container">
+
+			<header class="app-header">
+				<div class="header-buttons">
+					<button title="Settings" class="btn-settings" id="btnSettings">SET</button>
+					<button title="Saved notes" class="btn-snapshots" id="btnSnapshots">ROM</button>
+					<button title="Fullscreen" class="btn-fullscreen" id="btnFullscreen">F_S</button>
+					<button title="Picture in picture" class="btn-floating" id="btnFloating">PIP</button>
+				</div>
+			</header>
+
+			<main class="app-main" id="appMain">
+				<textarea class="notepad-textarea" id="notepad" spellcheck="true" placeholder="Start typing..."></textarea>
+			</main>
+
+			<footer class="app-footer">
+				<span class="char-count" id="charCount">0 characters</span> |
+				<span class="word-count" id="wordCount">0 words</span>
+			</footer>
+
+		</div>
+
+		<!-- Settings Modal -->
+		<dialog class="modal-settings" id="modalSettings" onmousedown="event.target==this && this.close()">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title">SETTINGS</h2>
+					<button class="btn-close-modal" id="btnCloseSettings">Close</button>
+				</div>
+
+				<div class="settings-wrap">
+					<!-- Theme Setting Added -->
+					<div class="setting-group">
+						<label>Theme:</label>
+						<select id="settingTheme">
+							<option value="dark">Dark</option>
+							<option value="dark_hc">Dark (high contrast)</option>
+							<option value="light">Light</option>
+							<option value="bitbee">Bitbee</option>
+							<option value="bitbee_inv">Bitbee (inverted)</option>
+							<option value="station_defender">Station defender</option>
+							<option value="paper_palette">Paper palette</option>
+							<option value="paper_palette_inv">Paper palette (inverted)</option>
+							<option value="4am">4AM</option>
+							<option value="console">Teal console</option>
+							<option value="console_green">Green console</option>
+							<option value="console_orange">Orange console</option>
+							<option value="nokia_3310">Nokia 3310</option>
+							<option value="chasing_light">Chasing Light</option>
+							<option value="ongbit">Ongbit</option>
+						</select>
+					</div>
+
+					<div class="setting-group">
+						<label>Font:</label>
+						<select id="settingFont">
+							<option value="system-ui">System Default</option>
+
+							<option value="'Google Sans', sans-serif">Google Sans</option>
+							<option value="'Nunito Sans', sans-serif">Nunito Sans</option>
+							<option value="Montserrat, sans-serif">Montserrat</option>
+							<option value="Karla, sans-serif">Karla</option>
+
+							<option value="'IBM Plex Mono', monospace">IBM Plex Mono</option>
+							<option value="'Roboto Mono', monospace">Roboto Mono</option>
+							<option value="'Red Hat Mono', monospace">Red Hat Mono</option>
+							<option value="Lekton, monospace">Lekton</option>
+
+							<option value="'Noto Serif', serif">Noto Serif</option>
+							<option value="'Patua One', serif">Patua One</option>
+							<option value="'Playfair Display', serif">Playfair Display</option>
+
+							<option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+							<option value="'Reenie Beanie', serif">Reenie Beanie</option>
+							<option value="'Indie Flower', serif">Indie Flower</option>
+						</select>
+					</div>
+		
+					<div class="setting-group">
+						<label>Font Size (px):</label>
+						<input type="number" id="settingFontSize" value="16" min="10" max="72">
+					</div>
+		
+					<div class="setting-group">
+						<label>Line Height:</label>
+						<input type="number" id="settingLineHeight" value="1.5" step="0.1" min="1" max="3">
+					</div>
+		
+					<div class="setting-group">
+						<label>Notepad Width (%):</label>
+						<input type="number" id="settingWidth" value="100" min="50" max="100">
+					</div>
+		
+					<div class="setting-group">
+						<label>Spellcheck:</label>
+						<input type="checkbox" id="settingSpellcheck" checked>
+					</div>
+					<div class="setting-group">
+						<label>Background dots:</label>
+						<input type="checkbox" id="settingBgDots" checked>
+					</div>
+				</div>
+				<button class="btn-install hidden" id="btnInstall">Install app</button>
+
+			</div>
+		</dialog>
+
+		<!-- Snapshots Modal -->
+		<dialog class="modal-snapshots" id="modalSnapshots" onmousedown="event.target==this && this.close()">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>SAVED_NOTES</h2>
+					<button class="btn-save-current" id="btnSaveCurrentSnapshot">Save Current Note</button>
+					<span>|</span>
+					<button class="btn-close-modal" id="btnCloseSnapshots">Close</button>
+				</div>
+
+				<ul class="snapshot-list" id="snapshotList">
+					<!-- Snapshots will be rendered here -->
+				</ul>
+			</div>
+		</dialog>
+
+		<!-- Toast Notification -->
+		<div class="toast-notification hidden" id="toast">Snapshot Saved!</div>
+	</div> <!-- /appWrapper -->
+
+	<script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

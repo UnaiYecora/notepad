@@ -1,0 +1,256 @@
+/* =========================================
+	Variables & Global Configuration
+   ========================================= */
+:root {
+	accent-color: var(--two);
+	--focus-outline-color: var(--two);
+	scrollbar-color: var(--two) var(--one);
+
+	font-family: 'Roboto Mono';
+	color: var(--two);
+
+	&::selection {
+		background: var(--two);
+		color: var(--one);
+	}
+
+	&:has(body[data-bg-dots="false"]) {
+		--dot-bg: none;
+	}
+
+	--dot-bg: radial-gradient(var(--dot) 1px, #0000 1px);
+	--dot-size: 24px 24px;
+}
+
+/* =========================================
+	Base Elements
+   ========================================= */
+html,
+body {
+	height: 100%;
+	background-color: var(--one);
+	background-image: var(--dot-bg);
+	background-size: var(--dot-size);
+	background-attachment: fixed;
+	color: var(--two);
+}
+
+input,
+select {
+	background-color: var(--one);
+	border: none;
+	border-color: transparent;
+}
+
+button {
+	background: transparent;
+	border: none;
+}
+
+/* =========================================
+	Main Layout & Notepad Area
+   ========================================= */
+div#appWrapper {
+	display: block !important;
+	height: 100%;
+}
+
+.app-container {
+	display: grid;
+	gap: 0.5rem;
+	height: 100%;
+	align-content: start;
+	justify-items: center;
+	grid-template-rows: 1fr;
+}
+
+main#appMain {
+	display: grid;
+	width: min(1170px, 100%);
+}
+
+.notepad-textarea {
+	background: transparent;
+	border: none;
+	margin-inline: auto;
+	outline: none;
+	resize: none;
+	padding: 2rem 1rem 5rem;
+}
+
+/* =========================================
+	App Header & Footer
+   ========================================= */
+header.app-header {
+	padding: 0.4rem 0.6rem;
+	position: absolute;
+	width: auto;
+	right: 1rem;
+	background-color: var(--one);
+	background-image: var(--dot-bg);
+	background-size: var(--dot-size);
+	background-attachment: fixed;
+
+	button {
+		background: transparent;
+		border: none;
+		padding: 0;
+	}
+}
+
+footer.app-footer {
+	position: absolute;
+	bottom: 0;
+	right: 1rem;
+	background-color: var(--one);
+	padding: 0.2rem;
+	background-image: var(--dot-bg);
+	background-size: var(--dot-size);
+	background-attachment: fixed;
+	pointer-events: none;
+}
+
+/* =========================================
+	Overlays: Modals & Toasts
+   ========================================= */
+/* Base Dialog Styles */
+dialog {
+	background-color: var(--one);
+	border-color: var(--two);
+	color: var(--two);
+	padding: 0;
+
+	&::backdrop {
+		background-color: #0000001f;
+	}
+
+	.modal-content {
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		height: 100%;
+		padding: 1rem;
+
+		.modal-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 1rem;
+
+			h2 {
+				margin-right: auto;
+				font-size: 1rem;
+				font-weight: 400;
+				line-height: 1;
+			}
+		}
+	}
+}
+
+/* Specific Modal: Settings */
+dialog#modalSettings {
+	width: min(600px, 100%);
+	height: min(600px, 100%);
+
+	.settings-wrap {
+		display: grid;
+		align-content: start;
+		gap: 1rem;
+		font-size: 1.5rem;
+		padding: 2rem 0rem 1rem;
+	}
+
+	.setting-group {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px dashed var(--dot);
+		padding-bottom: 1rem;
+	}
+
+	input,
+	select {
+		text-align: right;
+	}
+}
+
+/* Specific Modal: Snapshots */
+dialog#modalSnapshots {
+	width: min(900px, 100%);
+	height: min(900px, 100%);
+
+	.modal-header {
+		justify-content: flex-end;
+	}
+
+	ul#snapshotList {
+		padding: 1rem 0;
+		display: grid;
+		align-content: start;
+		gap: 1rem;
+		margin-top: 0.75rem;
+	}
+
+	li.snapshot-item {
+		display: flex;
+		gap: 1rem;
+		justify-content: space-between;
+		border-bottom: 1px dashed var(--dot);
+		padding-bottom: 1rem;
+	}
+
+	.snapshot-info {
+		display: grid;
+		gap: .75rem;
+	}
+
+	.snapshot-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		align-items: flex-end;
+	}
+
+	p.snapshot-date {
+		opacity: 0.55;
+		font-size: 0.9rem;
+	}
+
+	span.snapshot-snippet {
+		font-size: 1.3rem;
+		line-height: 1.2;
+	}
+}
+
+/* Toast Notification */
+div#toast {
+	display: none;
+	position: absolute;
+	padding: 0.2rem 0.7rem;
+	top: 2.4rem;
+	right: 1rem;
+	background-image: radial-gradient(var(--dot) 1px, rgba(0, 0, 0, 0) 1px);
+	color: var(--one);
+	background-color: var(--two);
+	line-height: 1;
+}
+
+/* =========================================
+	State Overrides
+   ========================================= */
+/* Picture in picture / Floating Window */
+body.is-floating-window {
+
+	header.app-header,
+	footer.app-footer {
+		display: none;
+	}
+
+	main#appMain {
+		width: 100%;
+	}
+}
+
+.hidden {
+	display: none !important;
+}
