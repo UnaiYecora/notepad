@@ -36,8 +36,8 @@
 		<dialog class="modal-settings" id="modalSettings" onmousedown="event.target==this && this.close()">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="modal-title">SETTINGS</h2>
-					<button class="btn-close-modal" id="btnCloseSettings">Close</button>
+					<h2>SETTINGS</h2>
+					<button class="btn-close-modal" id="btnCloseSettings">×</button>
 				</div>
 
 				<div class="settings-wrap">
@@ -111,8 +111,8 @@
 						<label>Background dots:</label>
 						<input type="checkbox" id="settingBgDots" checked>
 					</div>
+					<button class="btn-install hidden" id="btnInstall">Install app</button>
 				</div>
-				<button class="btn-install hidden" id="btnInstall">Install app</button>
 
 			</div>
 		</dialog>
@@ -122,9 +122,11 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h2>SAVED_NOTES</h2>
-					<button class="btn-save-current" id="btnSaveCurrentSnapshot">Save Current Note</button>
-					<span>|</span>
-					<button class="btn-close-modal" id="btnCloseSnapshots">Close</button>
+					<div class="snapshots-top-btns">
+						<button class="btn-save-current" id="btnSaveCurrentSnapshot">Save note</button>
+						<span>|</span>
+						<button class="btn-close-modal" id="btnCloseSnapshots">×</button>
+					</div>
 				</div>
 
 				<ul class="snapshot-list" id="snapshotList">
