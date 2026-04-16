@@ -45,6 +45,11 @@ select {
 button {
 	background: transparent;
 	border: none;
+	opacity: 0.75;
+
+	&:hover{
+		opacity: 1;
+	}
 }
 
 /* =========================================
@@ -76,6 +81,11 @@ main#appMain {
 	outline: none;
 	resize: none;
 	padding: 2rem 1rem 5rem;
+
+	&::placeholder{
+		color: currentColor;
+		opacity: 0.5;
+	}
 }
 
 /* =========================================
@@ -94,7 +104,7 @@ header.app-header {
 	button {
 		background: transparent;
 		border: none;
-		padding: 0;
+		padding: 0 0.5rem;
 	}
 }
 
@@ -108,6 +118,7 @@ footer.app-footer {
 	background-size: var(--dot-size);
 	background-attachment: fixed;
 	pointer-events: none;
+	font-size: 0.8rem;
 }
 
 /* =========================================
@@ -156,7 +167,7 @@ dialog#modalSettings {
 		display: grid;
 		align-content: start;
 		gap: 1rem;
-		font-size: 1.5rem;
+		font-size: clamp(0.9rem, 0.3074rem + 2.963vw, 1.5rem);
 		padding: 2rem 0rem 1rem;
 	}
 
@@ -204,16 +215,23 @@ dialog#modalSnapshots {
 		gap: .75rem;
 	}
 
-	.snapshot-actions {
+	.snapshot-bottom-bar{
 		display: flex;
-		flex-direction: column;
-		gap: 0.6rem;
-		align-items: flex-end;
+		align-items: center;
+		font-size: 0.9rem;
+
+		& > * {
+			opacity: 0.55;
+		}
+
+		button:hover{
+			opacity: 1;
+		}
 	}
 
 	p.snapshot-date {
-		opacity: 0.55;
-		font-size: 0.9rem;
+		margin-right: auto;
+		padding-right: 0.5rem;
 	}
 
 	span.snapshot-snippet {

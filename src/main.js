@@ -161,11 +161,11 @@ function renderSnapshots() {
 		li.innerHTML = /*html*/`
 		<div class="snapshot-info">
 			<p class="snapshot-snippet">${snap.snippet}</p>
-			<p class="snapshot-date">${snap.date}</p>
-		</div>
-		<div class="snapshot-actions">
-			<button class="btn-restore" data-id="${snap.id}">Restore</button>
-			<button class="btn-delete" data-id="${snap.id}">Delete</button>
+			<div class="snapshot-bottom-bar">
+				<p class="snapshot-date">${snap.date}</p>
+				<button class="btn-restore" data-id="${snap.id}">Restore</button>
+				<button class="btn-delete" data-id="${snap.id}">Delete</button>
+			</div>
 		</div>
     `;
 		snapshotList.appendChild(li);
@@ -176,6 +176,9 @@ function renderSnapshots() {
 		btn.addEventListener('click', (e) => {
 			const id = e.target.getAttribute('data-id');
 			const snap = snapshots.find(s => s.id == id);
+			if (confirm("Save current content before replacing it?") === true) {
+				saveSnapshot()
+			}
 			if (snap) {
 				notepad.value = snap.text;
 				notepad.dispatchEvent(new Event('input')); // trigger autosave
@@ -186,10 +189,12 @@ function renderSnapshots() {
 
 	document.querySelectorAll('.btn-delete').forEach(btn => {
 		btn.addEventListener('click', (e) => {
-			const id = e.target.getAttribute('data-id');
-			snapshots = snapshots.filter(s => s.id != id);
-			localStorage.setItem('notepad_snapshots', JSON.stringify(snapshots));
-			renderSnapshots();
+			if (confirm("Are you sure you want to permanently delete this?") === true) {
+				const id = e.target.getAttribute('data-id');
+				snapshots = snapshots.filter(s => s.id != id);
+				localStorage.setItem('notepad_snapshots', JSON.stringify(snapshots));
+				renderSnapshots();
+			}
 		});
 	});
 }
