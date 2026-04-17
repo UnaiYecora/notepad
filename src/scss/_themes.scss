@@ -17,7 +17,7 @@
 	&:has(body[data-theme="dark_hc"]) {
 		--one: #000;
 		--two: #fff;
-		--dot: #ffffff45;
+		--dot: #ffffff1e;
 		color-scheme: dark;
 	}
 
@@ -25,7 +25,7 @@
 	&:has(body[data-theme="light"]) {
 		--one: #e8e6e1;
 		--two: #121216;
-		--dot: #827964;
+		--dot: #82796457;
 		color-scheme: light;
 	}
 
@@ -33,7 +33,7 @@
 	&:has(body[data-theme="bitbee"]) {
 		--one: #292b30;
 		--two: #cfab4a;
-		--dot: #cfab4a47;
+		--dot: #cfac4a1c;
 		color-scheme: dark;
 	}
 
@@ -41,7 +41,7 @@
 	&:has(body[data-theme="bitbee_inv"]) {
 		--one: #cfab4a;
 		--two: #292b30;
-		--dot: #292b3078;
+		--dot: #292b3034;
 		color-scheme: light;
 	}
 
@@ -49,7 +49,7 @@
 	&:has(body[data-theme="station_defender"]) {
 		--one: #17141c;
 		--two: #a692b0;
-		--dot: #a692b045;
+		--dot: #a692b01e;
 		color-scheme: dark;
 	}
 
@@ -57,7 +57,7 @@
 	&:has(body[data-theme="paper_palette"]) {
 		--one: #f6e7c1;
 		--two: #3e3e3e;
-		--dot: #3e3e3e8a;
+		--dot: #3e3e3e38;
 		color-scheme: light;
 	}
 
@@ -65,7 +65,7 @@
 	&:has(body[data-theme="paper_palette_inv"]) {
 		--one: #3e3e3e;
 		--two: #f6e7c1;
-		--dot: #f6e7c129;
+		--dot: #f6e7c10f;
 		color-scheme: dark;
 	}
 
@@ -73,15 +73,15 @@
 	&:has(body[data-theme="4am"]) {
 		--one: #352b30;
 		--two: #e6d4be;
-		--dot: #e6d4be3b;
+		--dot: #e6d4be17;
 		color-scheme: dark;
 	}
 
-	// Nice Console
+	// Teal Console
 	&:has(body[data-theme="console"]) {
 		--one: #000000;
 		--two: #00ffae;
-		--dot: #00ffae40;
+		--dot: #00ffae23;
 		color-scheme: dark;
 	}
 
@@ -89,7 +89,7 @@
 	&:has(body[data-theme="console_green"]) {
 		--one: #000000;
 		--two: #86ea16;
-		--dot: #86ea164a;
+		--dot: #87ea1625;
 		color-scheme: dark;
 	}
 
@@ -97,7 +97,7 @@
 	&:has(body[data-theme="console_orange"]) {
 		--one: #000000;
 		--two: #ff9c40;
-		--dot: #ff9c4059;
+		--dot: #ff9c4022;
 		color-scheme: dark;
 	}
 
@@ -105,7 +105,7 @@
 	&:has(body[data-theme="nokia_3310"]) {
 		--one: #43523d;
 		--two: #c7f0d8;
-		--dot: #c7f0d845;
+		--dot: #c7f0d81f;
 		color-scheme: dark;
 	}
 
@@ -113,7 +113,7 @@
 	&:has(body[data-theme="chasing_light"]) {
 		--one: #000000;
 		--two: #ffff02;
-		--dot: #ffff0247;
+		--dot: #ffff0225;
 		color-scheme: dark;
 	}
 
@@ -121,7 +121,7 @@
 	&:has(body[data-theme="ongbit"]) {
 		--one: #151d24;
 		--two: #ed8463;
-		--dot: #ed846347;
+		--dot: #ed836327;
 		color-scheme: dark;
 	}
 }
