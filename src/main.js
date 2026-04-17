@@ -1,18 +1,21 @@
 import './style.scss';
+import { marked } from 'marked';
 
 // --- DOM Elements ---
-const appWrapper = document.getElementById('appWrapper');
-const notepad    = document.getElementById('notepad');
-const charCount  = document.getElementById('charCount');
-const wordCount  = document.getElementById('wordCount');
-const toast      = document.getElementById('toast');
+const appWrapper     = document.getElementById('appWrapper');
+const notepad        = document.getElementById('notepad');
+const charCount      = document.getElementById('charCount');
+const wordCount      = document.getElementById('wordCount');
+const toast          = document.getElementById('toast');
+const notepadPreview = document.getElementById('notepadPreview');
 
 // Buttons
-const btnSettings   = document.getElementById('btnSettings');
-const btnSnapshots  = document.getElementById('btnSnapshots');
-const btnFullscreen = document.getElementById('btnFullscreen');
-const btnInstall = document.getElementById('btnInstall');
-const btnFloating   = document.getElementById('btnFloating');
+const btnSettings    = document.getElementById('btnSettings');
+const btnSnapshots   = document.getElementById('btnSnapshots');
+const btnFullscreen  = document.getElementById('btnFullscreen');
+const btnPreview     = document.getElementById('btnPreview');
+const btnInstall     = document.getElementById('btnInstall');
+const btnFloating    = document.getElementById('btnFloating');
 if (!('documentPictureInPicture' in window)) {
     btnFloating.style.display = 'none';
 }
@@ -96,11 +99,15 @@ function saveAndApplySettings() {
 
 function applySettings() {
 	// Apply structural and text styles
-	notepad.style.fontFamily = settings.font;
-	notepad.style.fontSize   = `${settings.fontSize}px`;
-	notepad.style.lineHeight = settings.lineHeight;
-	notepad.style.width      = `${settings.width}%`;
-	notepad.spellcheck       = settings.spellcheck;
+	notepad.style.fontFamily        = settings.font;
+	notepadPreview.style.fontFamily = settings.font;
+	notepad.style.fontSize          = `${settings.fontSize}px`;
+	notepadPreview.style.fontSize   = `${settings.fontSize}px`;
+	notepad.style.lineHeight        = settings.lineHeight;
+	notepadPreview.style.lineHeight = settings.lineHeight;
+	notepad.style.width             = `${settings.width}%`;
+	// notepadPreview.style.width      = `${settings.width}%`;
+	notepad.spellcheck              = settings.spellcheck;
 
 	// Apply theme attribute to main document
 	document.body.setAttribute('data-theme', settings.theme);
@@ -412,6 +419,24 @@ importFileInput.addEventListener('change', (e) => {
         importFileInput.value = '';
     };
     reader.readAsText(file);
+});
+
+
+// --- Markdown preview ---
+let previewMode = false;
+
+function updatePreview() {
+    notepadPreview.innerHTML = marked.parse(
+        notepad.value.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, "")
+    );
+}
+
+btnPreview.addEventListener('click', () => {
+	previewMode = !previewMode;
+	notepad.style.display = previewMode ? 'none' : '';
+	notepadPreview.style.display = previewMode ? 'block' : 'none';
+	btnPreview.classList.toggle('active', previewMode);
+	if (previewMode) updatePreview();
 });
 
 

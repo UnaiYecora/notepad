@@ -17,5 +17,8 @@
     "vite-plugin-pwa": {
       "vite": "$vite"
     }
+  },
+  "dependencies": {
+    "marked": "^18.0.1"
   }
 }

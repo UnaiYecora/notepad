@@ -74,7 +74,8 @@ main#appMain {
 	width: min(1170px, 100%);
 }
 
-.notepad-textarea {
+.notepad-textarea,
+.notepad-preview {
 	background: transparent;
 	border: none;
 	margin-inline: auto;
@@ -93,7 +94,7 @@ main#appMain {
    ========================================= */
 header.app-header {
 	padding: 0.4rem 0.6rem;
-	position: absolute;
+	position: fixed;
 	width: auto;
 	right: 1rem;
 	background-color: var(--one);
@@ -109,7 +110,7 @@ header.app-header {
 }
 
 footer.app-footer {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	right: 1rem;
 	background-color: var(--one);
@@ -280,7 +281,7 @@ dialog#modalSnapshots {
 /* Toast Notification */
 div#toast {
 	display: none;
-	position: absolute;
+	position: fixed;
 	padding: 0.2rem 0.7rem;
 	top: 2.4rem;
 	right: 1rem;
@@ -308,4 +309,59 @@ body.is-floating-window {
 
 .hidden {
 	display: none !important;
+}
+
+
+/* =========================================
+	Markdown
+   ========================================= */
+.notepad-preview {
+	max-width: 100%;
+	overflow: auto;
+}
+
+pre {
+	background-color: var(--dot);
+	color: var(--one);
+	overflow: auto;
+	display: block;
+	padding: 1rem;
+}
+
+code {
+	padding: 0rem 0.5rem;
+	background-color: var(--two);
+	color: var(--one);
+}
+
+pre > code {
+    padding: 0;
+	background-color: transparent;
+	color: var(--two);
+}
+
+table {
+	border-collapse: collapse;
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	border: 1px solid var(--two);
+	padding: 0.25em 0.5em;
+	text-align: left;
+}
+
+th {
+	font-weight: bold;
+}
+
+blockquote {
+    border-left: 5px solid;
+    margin: 0;
+    padding-left: 1em;
+}
+
+hr {
+    border-color: var(--two);
 }
