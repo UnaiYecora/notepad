@@ -3,6 +3,7 @@ import { marked } from 'marked';
 
 // --- DOM Elements ---
 const appWrapper     = document.getElementById('appWrapper');
+const appMain        = document.getElementById('appMain');
 const notepad        = document.getElementById('notepad');
 const charCount      = document.getElementById('charCount');
 const wordCount      = document.getElementById('wordCount');
@@ -21,15 +22,16 @@ if (!('documentPictureInPicture' in window)) {
 }
 
 // Modals & Settings inputs
-const modalSettings     = document.getElementById('modalSettings');
-const btnCloseSettings  = document.getElementById('btnCloseSettings');
-const settingTheme      = document.getElementById('settingTheme');
-const settingFont       = document.getElementById('settingFont');
-const settingFontSize   = document.getElementById('settingFontSize');
-const settingLineHeight = document.getElementById('settingLineHeight');
-const settingWidth      = document.getElementById('settingWidth');
-const settingSpellcheck = document.getElementById('settingSpellcheck');
-const settingBgDots     = document.getElementById('settingBgDots');
+const modalSettings         = document.getElementById('modalSettings');
+const btnCloseSettings      = document.getElementById('btnCloseSettings');
+const settingTheme          = document.getElementById('settingTheme');
+const settingFont           = document.getElementById('settingFont');
+const settingFontSize       = document.getElementById('settingFontSize');
+const settingLineHeight     = document.getElementById('settingLineHeight');
+const settingWidth          = document.getElementById('settingWidth');
+const settingSpellcheck     = document.getElementById('settingSpellcheck');
+const settingBgDots         = document.getElementById('settingBgDots');
+const settingwideScrollArea = document.getElementById('settingwideScrollArea');
 
 const modalSnapshots         = document.getElementById('modalSnapshots');
 const btnCloseSnapshots      = document.getElementById('btnCloseSnapshots');
@@ -40,13 +42,14 @@ const snapshotList           = document.getElementById('snapshotList');
 let currentText = localStorage.getItem('notepad_text') || '';
 let snapshots = JSON.parse(localStorage.getItem('notepad_snapshots')) || [];
 let settings = JSON.parse(localStorage.getItem('notepad_settings')) || {
-	theme     : 'dark',
-	font      : "'Roboto Mono', monospace",
-	fontSize  : '28',
-	lineHeight: '1.5',
-	width     : '100',
-	spellcheck: true,
-	bgDots    : true
+	theme         : 'dark',
+	font          : "'Roboto Mono', monospace",
+	fontSize      : '28',
+	lineHeight    : '1.5',
+	width         : '100',
+	spellcheck    : true,
+	bgDots        : true,
+	wideScrollArea: false
 };
 
 // --- Initialization ---
@@ -56,13 +59,49 @@ function init() {
 	updateCounts();
 
 	// Apply loaded settings to form inputs
-	settingTheme.value        = settings.theme;
-	settingFont.value         = settings.font;
-	settingFontSize.value     = settings.fontSize;
-	settingLineHeight.value   = settings.lineHeight;
-	settingWidth.value        = settings.width;
-	settingSpellcheck.checked = settings.spellcheck;
-	settingBgDots.checked     = settings.bgDots;
+	settingTheme.value            = settings.theme;
+	settingFont.value             = settings.font;
+	settingFontSize.value         = settings.fontSize;
+	settingLineHeight.value       = settings.lineHeight;
+	settingWidth.value            = settings.width;
+	settingSpellcheck.checked     = settings.spellcheck;
+	settingBgDots.checked         = settings.bgDots;
+	settingwideScrollArea.checked = settings.wideScrollArea;
+
+	// UI
+	setTimeout(() => {
+		updateNotepadHeight();
+	}, 50);
+}
+
+// --- Resize notepad ---
+notepad.addEventListener('input', updateNotepadHeight);
+window.addEventListener("resize", updateNotepadHeight)
+function updateNotepadHeight() {
+	if (settings.wideScrollArea) {
+		const scrollY = window.scrollY;
+	
+		notepad.style.height = 'auto';
+		notepad.style.height = notepad.scrollHeight + 'px';
+	
+		window.scrollTo(0, scrollY);
+	} else {
+		notepad.style.height = 'unset';
+	}
+}
+
+// --- Auto-hide UI ---
+notepad.addEventListener('input', hideUI);
+notepad.addEventListener('focus', hideUI);
+document.addEventListener('scroll', hideUI)
+let hideUiTimeout;
+function hideUI() {
+	appWrapper.classList.add('active');
+
+	clearTimeout(hideUiTimeout);
+	hideUiTimeout = setTimeout(() => {
+		appWrapper.classList.remove('active');
+	}, 1000);
 }
 
 // --- Auto-save & Counts ---
@@ -85,13 +124,14 @@ btnCloseSettings.addEventListener('click', () => modalSettings.close());
 
 function saveAndApplySettings() {
 	settings = {
-		theme     : settingTheme.value,
-		font      : settingFont.value,
-		fontSize  : settingFontSize.value,
-		lineHeight: settingLineHeight.value,
-		width     : settingWidth.value,
-		spellcheck: settingSpellcheck.checked,
-		bgDots    : settingBgDots.checked
+		theme         : settingTheme.value,
+		font          : settingFont.value,
+		fontSize      : settingFontSize.value,
+		lineHeight    : settingLineHeight.value,
+		width         : settingWidth.value,
+		spellcheck    : settingSpellcheck.checked,
+		bgDots        : settingBgDots.checked,
+		wideScrollArea: settingwideScrollArea.checked
 	};
 	localStorage.setItem('notepad_settings', JSON.stringify(settings));
 	applySettings();
@@ -99,15 +139,14 @@ function saveAndApplySettings() {
 
 function applySettings() {
 	// Apply structural and text styles
-	notepad.style.fontFamily        = settings.font;
-	notepadPreview.style.fontFamily = settings.font;
-	notepad.style.fontSize          = `${settings.fontSize}px`;
-	notepadPreview.style.fontSize   = `${settings.fontSize}px`;
-	notepad.style.lineHeight        = settings.lineHeight;
-	notepadPreview.style.lineHeight = settings.lineHeight;
+	appMain.style.fontFamily        = settings.font;
+	appMain.style.fontSize          = `${settings.fontSize}px`;
+	appMain.style.lineHeight        = settings.lineHeight;
 	notepad.style.width             = `${settings.width}%`;
 	// notepadPreview.style.width      = `${settings.width}%`;
 	notepad.spellcheck              = settings.spellcheck;
+
+	updateNotepadHeight();
 
 	// Apply theme attribute to main document
 	document.body.setAttribute('data-theme', settings.theme);
@@ -121,7 +160,7 @@ function applySettings() {
 }
 
 // Listen to all setting changes
-[settingTheme, settingFont, settingFontSize, settingLineHeight, settingWidth, settingSpellcheck, settingBgDots].forEach(input => {
+[settingTheme, settingFont, settingFontSize, settingLineHeight, settingWidth, settingSpellcheck, settingBgDots, settingwideScrollArea].forEach(input => {
 	input.addEventListener('change', saveAndApplySettings);
 });
 

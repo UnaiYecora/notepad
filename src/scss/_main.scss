@@ -33,6 +33,7 @@ body {
 	background-size: var(--dot-size);
 	background-attachment: fixed;
 	color: var(--two);
+	scrollbar-gutter: stable;
 }
 
 input,
@@ -101,6 +102,7 @@ header.app-header {
 	background-image: var(--dot-bg);
 	background-size: var(--dot-size);
 	background-attachment: fixed;
+	transition: opacity .25s;
 
 	button {
 		background: transparent;
@@ -120,6 +122,13 @@ footer.app-footer {
 	background-attachment: fixed;
 	pointer-events: none;
 	font-size: 0.8rem;
+	transition: opacity .25s;
+}
+
+div#appWrapper.active footer.app-footer:not(:hover),
+div#appWrapper.active header.app-header:not(:hover) {
+	opacity: 0.1;
+	transition: opacity 0s;
 }
 
 /* =========================================
@@ -170,7 +179,7 @@ dialog {
 /* Specific Modal: Settings */
 dialog#modalSettings {
 	width: min(700px, 100%);
-	height: min(800px, 100%);
+	height: min(850px, 100%);
 
 	.settings-wrap {
 		display: flex;
