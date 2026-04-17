@@ -203,7 +203,7 @@ function saveSnapshot() {
 	snapshots.unshift(snapshot);
 	localStorage.setItem('notepad_snapshots', JSON.stringify(snapshots));
 	renderSnapshots();
-	showToast();
+	showToast('Note saved');
 }
 
 function renderSnapshots() {
@@ -236,6 +236,7 @@ function renderSnapshots() {
 				notepad.value = snap.text;
 				notepad.dispatchEvent(new Event('input')); // trigger autosave
 				modalSnapshots.close();
+				showToast("Note restored");
 			}
 		});
 	});
@@ -247,6 +248,7 @@ function renderSnapshots() {
 				snapshots = snapshots.filter(s => s.id != id);
 				localStorage.setItem('notepad_snapshots', JSON.stringify(snapshots));
 				renderSnapshots();
+				showToast("Note deleted")
 			}
 		});
 	});
@@ -260,11 +262,15 @@ document.addEventListener('keydown', (e) => {
 	}
 });
 
-function showToast(message = 'Snapshot Saved!') {
+// Toast notifications
+let toastTimeout;
+function showToast(message) {
+    if (!message) return;
     toast.textContent = message;
     toast.classList.remove('hidden');
     toast.style.display = 'block';
-    setTimeout(() => {
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
         toast.classList.add('hidden');
         toast.style.display = 'none';
     }, 2000);
@@ -401,7 +407,7 @@ function mergeImport(data) {
     const newOnes = data.snapshots.filter(s => !existingIds.has(s.id));
     snapshots = [...newOnes, ...snapshots];
     localStorage.setItem('notepad_snapshots', JSON.stringify(snapshots));
-    showToast('Imported ' + newOnes.length + ' note(s)!');
+    showToast('Imported ' + newOnes.length + ' note(s)');
     renderSnapshots();
 }
 
@@ -410,7 +416,7 @@ document.getElementById('btnExportClipboard').addEventListener('click', async ()
     const backup = buildBackup();
     try {
         await navigator.clipboard.writeText(JSON.stringify(backup, null, 2));
-        showToast('Copied to clipboard!');
+        showToast('Copied to clipboard');
     } catch (err) {
         alert('Could not access clipboard: ' + err.message);
     }
@@ -426,7 +432,7 @@ document.getElementById('btnExportFile').addEventListener('click', () => {
     a.download = `notepad-backup-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    showToast('File downloaded!');
+    showToast('File downloaded');
 });
 
 // Import → Clipboard
