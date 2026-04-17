@@ -3,8 +3,16 @@ import { marked } from 'marked';
 import { registerSW } from 'virtual:pwa-register';
 
 registerSW({
+	onNeedRefresh() {
+		if (confirm('New version available. Reload?')) {
+			updateSW(true);
+		}
+	},
 	onUpdated() {
 		window.location.reload();
+	},
+	onOfflineReady() {
+		console.log('App ready to work offline');
 	}
 });
 
