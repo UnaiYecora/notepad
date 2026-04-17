@@ -229,7 +229,7 @@ function renderSnapshots() {
 		btn.addEventListener('click', (e) => {
 			const id = e.target.getAttribute('data-id');
 			const snap = snapshots.find(s => s.id == id);
-			if (confirm("Save current content before replacing it?") === true) {
+			if (notepad.value.length > 0 && confirm("Save current content before replacing it?") === true) {
 				saveSnapshot()
 			}
 			if (snap) {
