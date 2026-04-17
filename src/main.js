@@ -476,10 +476,12 @@ function updatePreview() {
 
 btnPreview.addEventListener('click', () => {
 	previewMode = !previewMode;
+	notepadPreview.classList.toggle("md-on");
 	notepad.style.display = previewMode ? 'none' : '';
 	notepadPreview.style.display = previewMode ? 'block' : 'none';
 	btnPreview.classList.toggle('active', previewMode);
 	if (previewMode) updatePreview();
+	updateNotepadHeight();
 });
 
 

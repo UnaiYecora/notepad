@@ -83,6 +83,7 @@ main#appMain {
 	outline: none;
 	resize: none;
 	padding: 2rem 1rem 5rem;
+	min-height: 100%;
 
 	&::placeholder{
 		color: currentColor;
@@ -107,9 +108,30 @@ header.app-header {
 	button {
 		background: transparent;
 		border: none;
-		padding: 0 0.5rem;
+		padding: 0;
+		--mark-color: transparent;
+
+		&::before{
+			content: "[";
+		}
+		&::after{
+			content: "]";
+		}
+
+		&::before,
+		&::after{
+			color: var(--mark-color);
+		}
+
+		&:hover{
+			--mark-color: var(--dot)
+		}
 	}
 }
+
+body:has(#modalSnapshots[open]) #btnSnapshots{--mark-color: var(--two);}
+body:has(#modalSettings[open]) #btnSettings{--mark-color: var(--two);}
+body:has(.md-on) #btnPreview{--mark-color: var(--two);}
 
 footer.app-footer {
 	position: fixed;
