@@ -19,7 +19,9 @@ export default defineConfig({
 			includeAssets: ['favicon.ico'],
 			workbox: {
 				cleanupOutdatedCaches: true, // Automatically delete old version caches
-				globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'] // Cache all standard asset types
+				globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'], // Cache all standard asset types
+				skipWaiting: true,
+				clientsClaim: true,
 			},
 			devOptions: { enabled: true }, // Allows testing PWA in dev mode
 			manifest: {
