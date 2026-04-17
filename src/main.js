@@ -31,6 +31,7 @@ const settingLineHeight     = document.getElementById('settingLineHeight');
 const settingWidth          = document.getElementById('settingWidth');
 const settingSpellcheck     = document.getElementById('settingSpellcheck');
 const settingBgDots         = document.getElementById('settingBgDots');
+const settingMargins        = document.getElementById('settingMargins');
 const settingwideScrollArea = document.getElementById('settingwideScrollArea');
 
 const modalSnapshots         = document.getElementById('modalSnapshots');
@@ -49,7 +50,8 @@ let settings = JSON.parse(localStorage.getItem('notepad_settings')) || {
 	width         : '100',
 	spellcheck    : true,
 	bgDots        : true,
-	wideScrollArea: false
+	margins       : false,
+	wideScrollArea: false,
 };
 
 // --- Initialization ---
@@ -66,6 +68,7 @@ function init() {
 	settingWidth.value            = settings.width;
 	settingSpellcheck.checked     = settings.spellcheck;
 	settingBgDots.checked         = settings.bgDots;
+	settingMargins.checked        = settings.margins;
 	settingwideScrollArea.checked = settings.wideScrollArea;
 
 	// UI
@@ -131,7 +134,8 @@ function saveAndApplySettings() {
 		width         : settingWidth.value,
 		spellcheck    : settingSpellcheck.checked,
 		bgDots        : settingBgDots.checked,
-		wideScrollArea: settingwideScrollArea.checked
+		wideScrollArea: settingwideScrollArea.checked,
+		margins       : settingMargins.checked,
 	};
 	localStorage.setItem('notepad_settings', JSON.stringify(settings));
 	applySettings();
@@ -139,12 +143,12 @@ function saveAndApplySettings() {
 
 function applySettings() {
 	// Apply structural and text styles
-	appMain.style.fontFamily        = settings.font;
-	appMain.style.fontSize          = `${settings.fontSize}px`;
-	appMain.style.lineHeight        = settings.lineHeight;
-	notepad.style.width             = `${settings.width}%`;
-	// notepadPreview.style.width      = `${settings.width}%`;
-	notepad.spellcheck              = settings.spellcheck;
+	appMain.style.fontFamily   = settings.font;
+	appMain.style.fontSize     = `${settings.fontSize}px`;
+	appMain.style.lineHeight   = settings.lineHeight;
+	notepad.style.width        = `${settings.width}%`;
+	notepad.spellcheck         = settings.spellcheck;
+	notepad.style.borderInline = settings.margins ? '2px solid var(--dot)' : 'none';
 
 	updateNotepadHeight();
 
@@ -160,7 +164,7 @@ function applySettings() {
 }
 
 // Listen to all setting changes
-[settingTheme, settingFont, settingFontSize, settingLineHeight, settingWidth, settingSpellcheck, settingBgDots, settingwideScrollArea].forEach(input => {
+[settingTheme, settingFont, settingFontSize, settingLineHeight, settingWidth, settingSpellcheck, settingBgDots, settingwideScrollArea, settingMargins].forEach(input => {
 	input.addEventListener('change', saveAndApplySettings);
 });
 

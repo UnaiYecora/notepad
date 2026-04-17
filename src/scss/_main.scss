@@ -183,12 +183,13 @@ dialog#modalSettings {
 
 	.settings-wrap {
 		display: flex;
-		gap: 1rem;
+		gap: 0.7rem;
 		font-size: clamp(0.9rem, 0.3074rem + 2.963vw, 1.5rem);
 		padding: 2rem 1rem 1rem;
 		overflow: auto;
 		min-height: 100%;
 		flex-direction: column;
+		overscroll-behavior: contain;
 	}
 
 	.setting-group {
@@ -247,6 +248,7 @@ dialog#modalSnapshots {
 		gap: 1rem;
 		margin-top: 0.75rem;
 		overflow: auto;
+		overscroll-behavior: contain;
 	}
 
 	li.snapshot-item {
