@@ -11,8 +11,11 @@ const toast      = document.getElementById('toast');
 const btnSettings   = document.getElementById('btnSettings');
 const btnSnapshots  = document.getElementById('btnSnapshots');
 const btnFullscreen = document.getElementById('btnFullscreen');
-const btnFloating   = document.getElementById('btnFloating');
 const btnInstall = document.getElementById('btnInstall');
+const btnFloating   = document.getElementById('btnFloating');
+if (!('documentPictureInPicture' in window)) {
+    btnFloating.style.display = 'none';
+}
 
 // Modals & Settings inputs
 const modalSettings     = document.getElementById('modalSettings');
