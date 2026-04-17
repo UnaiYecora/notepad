@@ -168,8 +168,8 @@ dialog {
 
 /* Specific Modal: Settings */
 dialog#modalSettings {
-	width: min(600px, 100%);
-	height: min(650px, 100%);
+	width: min(700px, 100%);
+	height: min(800px, 100%);
 
 	.settings-wrap {
 		display: flex;
@@ -188,11 +188,15 @@ dialog#modalSettings {
 		align-items: center;
 		border-bottom: 1px dashed var(--dot);
 		padding-bottom: 1rem;
+
+		div{
+			display: flex;
+		}
 	}
 
 	.btn-install{
 		margin-top: auto;
-		padding-top: 2rem;
+		padding-top: 1rem;
 	}
 
 	input,

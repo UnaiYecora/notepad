@@ -111,6 +111,23 @@
 						<label>Background dots:</label>
 						<input type="checkbox" id="settingBgDots" checked>
 					</div>
+					<div class="setting-group">
+						<label>Export to:</label>
+						<div>
+							<button id="btnExportClipboard">Clipboard</button>
+							<span>|</span>
+							<button id="btnExportFile">File</button>
+						</div>
+					</div>
+					<div class="setting-group">
+						<label>Import from:</label>
+						<div>
+							<button id="btnImportClipboard">Clipboard</button>
+							<span>|</span>
+							<button id="btnImportFile">File</button>
+							<input type="file" id="importFileInput" accept=".json" style="display:none">
+						</div>
+					</div>
 					<button class="btn-install hidden" id="btnInstall">Install app</button>
 				</div>
 

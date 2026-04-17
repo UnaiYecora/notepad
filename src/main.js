@@ -207,13 +207,14 @@ document.addEventListener('keydown', (e) => {
 	}
 });
 
-function showToast() {
-	toast.classList.remove('hidden');
-	toast.style.display = 'block';
-	setTimeout(() => {
-		toast.classList.add('hidden');
-		toast.style.display = 'none';
-	}, 2000);
+function showToast(message = 'Snapshot Saved!') {
+    toast.textContent = message;
+    toast.classList.remove('hidden');
+    toast.style.display = 'block';
+    setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.style.display = 'none';
+    }, 2000);
 }
 
 // --- Fullscreen Logic ---
@@ -308,5 +309,108 @@ window.addEventListener('appinstalled', () => {
 });
 
 
-// Run Init
+// --- Import / Export Logic ---
+
+const BACKUP_SIGNATURE = 'notepad_backup_v1';
+
+/** Snapshot the current note (if non-empty) and return the full backup object */
+function buildBackup() {
+    // Save current note as a snapshot first
+    if (notepad.value.trim()) {
+        saveSnapshot();
+    }
+    return {
+        __type   : BACKUP_SIGNATURE,
+        exportedAt: new Date().toISOString(),
+        snapshots : snapshots,
+    };
+}
+
+/** Validate that a parsed object looks like a backup from this app */
+function isValidBackup(data) {
+    return (
+        data &&
+        typeof data === 'object' &&
+        data.__type === BACKUP_SIGNATURE &&
+        Array.isArray(data.snapshots) &&
+        data.snapshots.every(s =>
+            typeof s.id      === 'number' &&
+            typeof s.date    === 'string' &&
+            typeof s.text    === 'string' &&
+            typeof s.snippet === 'string'
+        )
+    );
+}
+
+/** Merge imported snapshots (de-dupe by id, newest first) */
+function mergeImport(data) {
+    const existingIds = new Set(snapshots.map(s => s.id));
+    const newOnes = data.snapshots.filter(s => !existingIds.has(s.id));
+    snapshots = [...newOnes, ...snapshots];
+    localStorage.setItem('notepad_snapshots', JSON.stringify(snapshots));
+    showToast('Imported ' + newOnes.length + ' note(s)!');
+    renderSnapshots();
+}
+
+// Export → Clipboard
+document.getElementById('btnExportClipboard').addEventListener('click', async () => {
+    const backup = buildBackup();
+    try {
+        await navigator.clipboard.writeText(JSON.stringify(backup, null, 2));
+        showToast('Copied to clipboard!');
+    } catch (err) {
+        alert('Could not access clipboard: ' + err.message);
+    }
+});
+
+// Export → File
+document.getElementById('btnExportFile').addEventListener('click', () => {
+    const backup = buildBackup();
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `notepad-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('File downloaded!');
+});
+
+// Import → Clipboard
+document.getElementById('btnImportClipboard').addEventListener('click', () => {
+    const text = prompt('Paste your backup JSON:')?.trim();
+    if (!text) return;
+    try {
+        const data = JSON.parse(text);
+        if (!isValidBackup(data)) throw new Error('Not a valid notepad backup.');
+        mergeImport(data);
+    } catch (err) {
+        alert('Import failed: ' + (err instanceof SyntaxError ? 'Content is not valid JSON.' : err.message));
+    }
+});
+
+// Import → File (trigger hidden input)
+const importFileInput = document.getElementById('importFileInput');
+document.getElementById('btnImportFile').addEventListener('click', () => importFileInput.click());
+
+importFileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+        try {
+            const data = JSON.parse(ev.target.result);
+            if (!isValidBackup(data)) throw new Error('Not a valid notepad backup.');
+            mergeImport(data);
+        } catch (err) {
+            alert('Import failed: ' + err.message);
+        }
+        // Reset so the same file can be re-imported if needed
+        importFileInput.value = '';
+    };
+    reader.readAsText(file);
+});
+
+
+// --------------------------- Run Init ---------------------------------
 init();
