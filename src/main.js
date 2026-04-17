@@ -1,5 +1,12 @@
 import './style.scss';
 import { marked } from 'marked';
+import { registerSW } from 'virtual:pwa-register';
+
+registerSW({
+	onUpdated() {
+		window.location.reload();
+	}
+});
 
 // --- DOM Elements ---
 const appWrapper     = document.getElementById('appWrapper');
