@@ -251,6 +251,7 @@ function renderSnapshots() {
 				notepad.value = snap.text;
 				notepad.dispatchEvent(new Event('input')); // trigger autosave
 				modalSnapshots.close();
+				updatePreview();
 				showToast("Note restored");
 			}
 		});
