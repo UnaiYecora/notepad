@@ -223,21 +223,28 @@ function saveSnapshot() {
 
 function renderSnapshots() {
 	snapshotList.innerHTML = '';
-	snapshots.forEach(snap => {
-		const li = document.createElement('li');
-		li.className = 'snapshot-item';
-		li.innerHTML = /*html*/`
-		<div class="snapshot-info">
-			<p class="snapshot-snippet">${snap.snippet}</p>
-			<div class="snapshot-bottom-bar">
-				<p class="snapshot-date">${snap.date}</p>
-				<button class="btn-restore" data-id="${snap.id}">Restore</button>
-				<button class="btn-delete" data-id="${snap.id}">Delete</button>
+
+	if (snapshots.length > 0) {
+		snapshots.forEach(snap => {
+			const li = document.createElement('li');
+			li.className = 'snapshot-item';
+			li.innerHTML = /*html*/`
+			<div class="snapshot-info">
+				<p class="snapshot-snippet">${snap.snippet}</p>
+				<div class="snapshot-bottom-bar">
+					<p class="snapshot-date">${snap.date}</p>
+					<button class="btn-restore" data-id="${snap.id}">Restore</button>
+					<button class="btn-delete" data-id="${snap.id}">Delete</button>
+				</div>
 			</div>
-		</div>
-    `;
-		snapshotList.appendChild(li);
-	});
+		`;
+			snapshotList.appendChild(li);
+		});
+	} else {
+		snapshotList.innerHTML = /*html*/`
+			<li class="empty-storage">No saved notes. <br><br> You can save a note by clicking on <code>Save note</code> at the top right of this window, or by using <code>Ctrl+S</code></li>
+		`;
+	}
 
 	// Attach event listeners to dynamically created buttons
 	document.querySelectorAll('.btn-restore').forEach(btn => {
