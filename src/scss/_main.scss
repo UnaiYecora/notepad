@@ -351,6 +351,10 @@ body.is-floating-window {
 	main#appMain {
 		width: 100%;
 	}
+
+	#notepad{
+		height: unset !important;
+	}
 }
 
 .hidden {
